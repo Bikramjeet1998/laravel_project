@@ -15,6 +15,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::get();
+        //three ways to pass data through route
         //return view('pages.categories.table', compact('categories'));
         //return view('pages.categories.table', ['categories' => $categories]);
         return view('pages.categories.index')->with(['categories' => $categories]);
@@ -63,14 +64,24 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        $category = Category::find($id);
-        $category->name = $request['category_name'];
-        $category->status = $request['category_status'];
-        $category->description = $request['category_description'];
-        $category->save();
-        return redirect(route('categories.index'));
+        $Categoryservice = new CategoryService();
+        $res = $Categoryservice->update($request, $id);
+        if ($res['status']) {
+            session()->flash('success',  $res['message']);
+        } else {
+            session()->flash('error',  $res['message']);
+        }
+
+
+        return  redirect(route('categories.index'));
+        // $category = Category::find($id);
+        // $category->name = $request['category_name'];
+        // $category->status = $request['category_status'];
+        // $category->description = $request['category_description'];
+        // $category->save();
+        // return redirect(route('categories.index'));
     }
 
     /**
@@ -79,7 +90,14 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
-        $category->delete();
+        $delete =   $category->delete();
+        if ($delete) {
+            $delete = ['status' => true, 'message' => 'Category deleted', 'code' => 200, 'category' => $category];
+            session()->flash('success',  $delete['message']);
+        } else {
+            $delete = ['status' => false, 'message' => 'unable to  deleted', 'code' => 400, 'category' => $category];
+            session()->flash('error',  $delete['message']);
+        }
         return  redirect(route('categories.index'));
     }
 }

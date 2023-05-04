@@ -5,6 +5,12 @@
     <div class="container-fluid">
         <h1 class="mb-4 mt-4 text-center">List Of Categories</h1>
         {{-- form --}}
+        @if (session()->has('success'))
+        <p class="alert alert-success">{{ session()->get('success')}} </p>
+    @endif
+    @if (session()->has('error'))
+        <p class="alert alert-error">{{ session()->get('error')}} </p>
+    @endif
         <table class="table  table-hover table-bordered">
             {{-- <caption>List of users</caption> --}}
             <thead class="thead-dark fw-bold"></thead>
@@ -13,7 +19,7 @@
                 <th>Image </th>
                 <th>Status</th>
                 <th>Description</th>
-                <th class="text-center">Action</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -25,13 +31,15 @@
                 <td>{{$category->description}}</td>
                 <td>
                         {{-- <form action="{{route('categories.destroy', $category->id)}}" method="post"> --}}
-                            <form method="Post" action="/categories/destroy/{{$category->id}}">
+                            {{-- <form method="Post" action="/categories/destroy/{{$category->id}}"> --}}
+                                <form method="Post" action="{{route('categories.destroy', $category->id)}}">
                             @csrf
                             @method('DELETE')
-                    <a class="btn btn-primary" href="{{route('categories.show', $category->id)}}">Detail</a>
-                    <a class="btn btn-primary" href="{{route('categories.edit', $category->id)}}">Edit</a>
+                    <a class="btn btn-primary btn-sm" href="{{route('categories.show', $category->id)}}">Detail</a>
+                    <a class="btn btn-primary btn-sm" href="{{route('categories.edit', $category->id)}}">Edit</a>
                     {{-- <a class="btn btn-danger" href="{{route('categories.destroy', $category->id)}}">Delete</a> --}}
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are You Sure to delete this?')">Delete</button>
+                    
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure to delete this?')">Delete</button>
                         </form>
                 </td>
             </tr>

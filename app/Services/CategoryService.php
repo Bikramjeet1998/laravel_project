@@ -27,5 +27,23 @@ class CategoryService
 
     function update($request, $id)
     {
+        if ($request->hasFile('category_image')) {
+            $file = $request->file('category_image');
+            $fileName = $file->getClientOriginalName();
+            $destination = 'uploads/categories';
+            if ($file->move($destination, $fileName)) {
+                $request->request->add(['image' => $fileName]);
+            }
+        }
+
+        $data = [
+            'name' => $request->category_name,
+            'image' =>  $request->image,
+            'status' => $request->category_status,
+            'description' => $request->category_description
+
+        ];
+        $CategoryRepository = new CategoryRepository();
+        return  $CategoryRepository->update($data, $id);
     }
 }

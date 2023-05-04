@@ -18,4 +18,16 @@ class CategoryRepository
             return ['status' => false, 'message' => 'Something went wrong! Please try again.', 'error' => $th->getMessage(), 'code' => 400];
         }
     }
+
+    function update(array $data, $id)
+    {
+        $category = Category::find($id);
+        $category->name = $data['name'];
+        $category->status = $data['status'];
+        $category->description = $data['description'];
+        $category->image = $data['image'];
+        if ($category->save()) {
+            return ['status' => true, 'message' => 'Category updated', 'code' => 200, 'category' => $category];
+        }
+    }
 }
