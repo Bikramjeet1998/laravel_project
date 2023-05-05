@@ -43,7 +43,9 @@ Route::get('/', function () {
 Route::group(['moduleNmae' => 'dashboard'], function () {
     Route::get('dashboard', 'DashboardController@home')->name('dashboard');
     Route::resource('categories', CategoriesController::class);
+    Route::delete('/categories/destroy/{id}', 'CategoriesController@destroy');
 });
-Route::delete('/categories/destroy/{id}', 'CategoriesController@destroy');
+
 
 Route::resource('products', ProductsController::class);
+Route::delete('/products/destroy/{id}', 'ProductsController@destroy');

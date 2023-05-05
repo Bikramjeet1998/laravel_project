@@ -22,12 +22,10 @@ class CategoryRepository
     function update(array $data, $id)
     {
         $category = Category::find($id);
-        $category->name = $data['name'];
-        $category->status = $data['status'];
-        $category->description = $data['description'];
-        $category->image = $data['image'];
-        if ($category->save()) {
+        if ($category->update($data)) {
             return ['status' => true, 'message' => 'Category updated', 'code' => 200, 'category' => $category];
+        } else {
+            return ['status' => false, 'message' => 'umable to update', 'code' => 400, 'category' => $category];
         }
     }
 }

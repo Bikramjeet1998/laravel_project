@@ -70,12 +70,12 @@ class CategoriesController extends Controller
         $res = $Categoryservice->update($request, $id);
         if ($res['status']) {
             session()->flash('success',  $res['message']);
+            return  redirect()->route('categories.index');
         } else {
             session()->flash('error',  $res['message']);
         }
+        return  back();
 
-
-        return  redirect(route('categories.index'));
         // $category = Category::find($id);
         // $category->name = $request['category_name'];
         // $category->status = $request['category_status'];
@@ -95,7 +95,7 @@ class CategoriesController extends Controller
             $delete = ['status' => true, 'message' => 'Category deleted', 'code' => 200, 'category' => $category];
             session()->flash('success',  $delete['message']);
         } else {
-            $delete = ['status' => false, 'message' => 'unable to  deleted', 'code' => 400, 'category' => $category];
+            $delete = ['status' => false, 'message' => 'unable to  delete', 'code' => 400, 'category' => $category];
             session()->flash('error',  $delete['message']);
         }
         return  redirect(route('categories.index'));
