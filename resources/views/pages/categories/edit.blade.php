@@ -8,6 +8,7 @@
           {{-- {!! Form::model($editRole,['route' => ['updateRole', $editRole->id],'method' => 'post']) !!} --}}
               <div class="form-group mt-2">
                  @method('put')
+                 {!! Form::hidden('image', $category->image )!!}
                   {!!Form::label('category_name','Category Name', ['class' => 'fw-bold'])!!}
                   {!!Form::text('category_name', $category->name, ['class' => 'form-control '.($errors->has('category_name') ? 'is-invalid' : '')])!!}
                   @error('category_name')

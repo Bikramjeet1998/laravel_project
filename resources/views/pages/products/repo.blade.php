@@ -57,8 +57,7 @@
             const formData = new FormData(form);
             $.ajax({
                 type: "POST",
-                // url: "{{route('products/delete')}}",
-                url : "/products/delete";
+                url: "{{ route('product.delete') }}",
                 data: formData,
                 processData: false,
                 contentType: false,

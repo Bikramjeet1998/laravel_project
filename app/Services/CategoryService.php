@@ -34,9 +34,12 @@ class CategoryService
     function update($request, $id)
     {
         $fileName = $this->uploadCategoryImage($request);
+        $oldimg = $request->image;
         $image = null;
         if ($fileName != null) {
             $image = $fileName;
+        } else {
+            $image = $oldimg;
         }
         $request->request->add(['image' => $image]);
         $data = [

@@ -6,6 +6,7 @@ use App\Http\Controllers\newcontrole;
 use App\Http\Controllers\usercontroler;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ProductsController;
 
 
 /*
@@ -43,9 +44,10 @@ Route::get('/', function () {
 Route::group(['moduleNmae' => 'dashboard'], function () {
     Route::get('dashboard', 'DashboardController@home')->name('dashboard');
     Route::resource('categories', CategoriesController::class);
-    Route::delete('/categories/destroy/{id}', 'CategoriesController@destroy');
+    Route::post('/categories/destroy/{id}', 'CategoriesController@destroy');
 });
 
 
 Route::resource('products', ProductsController::class);
-Route::delete('/products/destroy/{id}', 'ProductsController@destroy');
+// Route::delete('/products/destroy/{id}', 'ProductsController@destroy');
+Route::post('/products/delete', 'ProductsController@deleteProduct');
